@@ -1,0 +1,59 @@
+# ================================================================
+# Taillor Protecting Principal Components Parameterefficient — Experiment Configuration
+# ================================================================
+
+experiment:
+  name: "taillor_protecting_principal_components_parameterefficient"
+  seed: 42
+  output_dir: "results"
+  verbose: true
+
+data:
+  source: "synthetic"        # "synthetic" or path to CSV
+  test_size: 0.2
+  n_samples: 2000
+  n_features: 30
+  noise_ratio: 0.05
+  stratify: true
+
+preprocessing:
+  scaler: "standard"         # "standard", "minmax", or "robust"
+  handle_missing: "median"
+  balance_classes: false      # Set true for SMOTE-like oversampling
+
+models:
+  random_forest:
+    n_estimators: 200
+    max_depth: 15
+    min_samples_split: 5
+    n_jobs: -1
+
+  gradient_boosting:
+    n_estimators: 200
+    max_depth: 6
+    learning_rate: 0.1
+    subsample: 0.8
+
+  svm:
+    kernel: "rbf"
+    C: 1.0
+    gamma: "scale"
+
+  mlp:
+    hidden_layers: [256, 128, 64]
+    activation: "relu"
+    max_iter: 500
+    early_stopping: true
+    validation_fraction: 0.1
+
+evaluation:
+  metrics:
+    - accuracy
+    - precision
+    - recall
+    - f1_score
+    - auc_roc
+  cross_validation:
+    enabled: true
+    folds: 5
+  confidence_interval: 0.95
